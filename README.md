@@ -1,2 +1,2 @@
-# lagiafa.com
+# lagiafa
 lagiafa
