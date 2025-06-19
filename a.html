@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lagiafa - Магазин одежды</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+
+        header {
+            background: linear-gradient(135deg, #6e48aa, #9d50bb);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .auth-buttons button {
+            background: white;
+            color: #6e48aa;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .auth-buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .cart-icon {
+            position: relative;
+            margin-left: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+        
+
+        .hero {
+            height: 400px;
+            background: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 1rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease-in;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 1.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 1rem 2rem;
+            margin: 0 0.5rem;
+            background: white;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .tab:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .tab.active {
+            background: #6e48aa;
+            color: white;
+        }
+        
+
+        .products-section {
+            padding: 2rem 0;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            color: #6e48aa;
+            margin-bottom: 1rem;
+        }
+        
+        .product-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .view-btn, .add-to-cart {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .view-btn {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .view-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .add-to-cart {
+            background: #6e48aa;
+            color: white;
+        }
+        
+        .add-to-cart:hover {
+            background: #5d3a99;
+        }
+        
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: modalFadeIn 0.3s;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .auth-submit {
+            background: #6e48aa;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .auth-submit:hover {
+            background: #5d3a99;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .auth-tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            margin-right: 0.5rem;
+        }
+        
+        .auth-tab.active {
+            border-bottom: 2px solid #6e48aa;
+            color: #6e48aa;
+            font-weight: bold;
+        }
+        
+
+        .product-modal-content {
+            max-width: 800px;
+        }
+        
+        .modal-product-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+        
+        .modal-product-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .modal-product-price {
+            font-size: 1.2rem;
+            color: #6e48aa;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .modal-product-description {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            z-index: 1001;
+            display: none;
+            flex-direction: column;
+        }
+        
+        .cart-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+        
+        .cart-item {
+            display: flex;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 1rem;
+        }
+        
+        .cart-item-details {
+            flex: 1;
+        }
+        
+        .cart-item-title {
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+        }
+        
+        .cart-item-price {
+            color: #6e48aa;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .cart-item-quantity {
+            padding: 0.3rem 0.6rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .quantity-btn {
+            width: 25px;
+            height: 25px;
+            border: none;
+            background: #f0f0f0;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .remove-item {
+            color: #ff4757;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .cart-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .checkout-btn {
+            background: #6e48aa;
+            color: white;
+            border: none;
+            padding: 1rem;
+            width: 100%;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            background: #5d3a99;
+        }
+        
+
+        .contacts {
+            background: #6e48aa;
+            color: white;
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+        
+        .contacts h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .contact-card {
+            background: white;
+            color: #333;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+        
+        .contact-card h3 {
+            color: #6e48aa;
+            margin-bottom: 1rem;
+        }
+        
+
+        footer {
+            background: #333;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">lagiafa</div>
+                <div class="header-actions">
+                    <div class="auth-buttons">
+                        <button id="login-btn">Войти</button>
+                        <button id="register-btn">Регистрация</button>
+                    </div>
+                    <div class="cart-icon" id="cart-icon">
+                        🛒
+                        <span class="cart-count" id="cart-count">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Добро пожаловать в lagiafa</h1>
+            <p>Откройте для себя последние тенденции моды в нашем магазине</p>
+        </div>
+    </section>
+    
+
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" data-tab="tops">Верхняя одежда</div>
+            <div class="tab" data-tab="bottoms">Нижняя одежда</div>
+            <div class="tab" data-tab="shoes">Обувь</div>
+            <div class="tab" data-tab="accessories">Аксессуары</div>
+        </div>
+    </div>
+    
+
+    <div class="container">
+
+        <section id="tops" class="section active">
+            <div class="products-grid">
+
+            </div>
+        </section>
+        
+
+        <section id="bottoms" class="section">
+            <div class="products-grid">
+
+            </div>
+        </section>
+        
+
+        <section id="shoes" class="section">
+            <div class="products-grid">
+
+            </div>
+        </section>
+        
+
+        <section id="accessories" class="section">
+            <div class="products-grid">
+
+            </div>
+        </section>
+    </div>
+    
+
+    <section class="contacts">
+        <div class="container">
+            <h2>Наши контакты</h2>
+            <div class="contact-info">
+                <div class="contact-card">
+                    <h3>Адрес</h3>
+                    <p>г. Улан-Удэ, ул. Анонимная, 333</p>
+                </div>
+                <div class="contact-card">
+                    <h3>Телефон</h3>
+                    <p>+7 (999) 683-99-82</p>
+                </div>
+                <div class="contact-card">
+                    <h3>Email</h3>
+                    <p>info@lagiafa.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 lagiafa. Все права защищены.</p>
+        </div>
+    </footer>
+    
+
+    <div class="modal" id="auth-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-auth-modal">&times;</button>
+            <div class="auth-tabs">
+                <div class="auth-tab active" data-tab="login">Вход</div>
+                <div class="auth-tab" data-tab="register">Регистрация</div>
+            </div>
+            
+            <form class="auth-form active" id="login-form">
+                <div class="form-group">
+                    <label for="login-username">Ник:</label>
+                    <input type="text" id="login-username" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Пароль:</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="auth-submit">Войти</button>
+            </form>
+            
+            <form class="auth-form" id="register-form">
+                <div class="form-group">
+                    <label for="register-username">Ник:</label>
+                    <input type="text" id="register-username" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Пароль:</label>
+                    <input type="password" id="register-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-confirm">Подтвердите пароль:</label>
+                    <input type="password" id="register-confirm" required>
+                </div>
+                <button type="submit" class="auth-submit">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+    
+
+    <div class="modal" id="product-modal">
+        <div class="modal-content product-modal-content">
+            <button class="close-modal" id="close-product-modal">&times;</button>
+            <img src="" alt="Product Image" class="modal-product-image" id="modal-product-image">
+            <h2 class="modal-product-title" id="modal-product-title"></h2>
+            <div class="modal-product-price" id="modal-product-price"></div>
+            <p class="modal-product-description" id="modal-product-description"></p>
+            <button class="auth-submit" id="add-to-cart-modal">Добавить в корзину</button>
+        </div>
+    </div>
+    
+
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-header">
+            <h2>Корзина</h2>
+            <button class="close-modal" id="close-cart-modal">&times;</button>
+        </div>
+        <div class="cart-items" id="cart-items">
+
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Итого:</span>
+                <span id="cart-total-price">0 ₽</span>
+            </div>
+            <button class="checkout-btn">Оформить заказ</button>
+        </div>
+    </div>
+    
+    <script>
+
+        const productsData = {
+            tops: [
+                {
+                    id: 1,
+                    title: "Футболка оверсайз",
+                    price: 1999,
+                    image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    description: "Модная футболка оверсайз из хлопка с принтом. Удобная и стильная вещь для повседневной носки."
+                },
+                {
+                    id: 2,
+                    title: "Рубашка в клетку",
+                    price: 3499,
+                    image: "https://brusnikabrand.com/upload/resize_cache/iblock/b28/1333_1999_1/8vz2an0ez095rydrc32ob2dtgx0hiun2.jpg",
+                    description: "Стильная рубашка в клетку из хлопка. Идеально сочетается с джинсами и чиносами."
+                }
+            ],
+            bottoms: [
+                {
+                    id: 3,
+                    title: "Джинсы скинни",
+                    price: 4599,
+                    image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    description: "Классические джинсы скинни из эластичного денима. Удобная посадка и стильный вид."
+                },
+                {
+                    id: 4,
+                    title: "Чиносы",
+                    price: 3899,
+                    image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT0k1T0OJg-09oOZLMsUAIR1v8Qfq8D9BlV7W1qARC9f2sPuUL89KglI_bZWYXlp73p1jN_QYox0sjiAnKy5PFYWWA1U9XsBffwtXVk2mLQqy3HTD4fpXakPg",
+                    description: "Стильные чиносы из хлопка. Универсальная модель, подходящая как для офиса, так и для повседневной носки."
+                }
+            ],
+            shoes: [
+                {
+                    id: 5,
+                    title: "Кроссовки",
+                    price: 5999,
+                    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    description: "Спортивные кроссовки с амортизирующей подошвой. Удобные и стильные для повседневной носки."
+                },
+                {
+                    id: 6,
+                    title: "Лоферы",
+                    price: 4999,
+                    image: "https://cdn.idol.ru/upload/resize_cache/items/50/41/560_747_1710164947/4132556821_50_06.jpg",
+                    description: "Классические лоферы из натуральной кожи. Идеальный выбор для офиса и деловых встреч."
+                }
+            ],
+            accessories: [
+                {
+                    id: 7,
+                    title: "Ремень",
+                    price: 1999,
+                    image: "https://roomm.ru/upload/resize_cache/iblock/0b6/564_1000_1/i7wg9xr7gni15cftksu8jjgoyzyodiqr.jpeg",
+                    description: "Кожаный ремень с металлической пряжкой. Подходит как для классических брюк, так и для джинсов."
+                },
+                {
+                    id: 8,
+                    title: "Кепка",
+                    price: 1499,
+                    image: "https://images.unsplash.com/photo-1534215754734-18e55d13e346?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                    description: "Кепка плотно облегает голову. Летние и демисезонные кепки изготавливают из поликоттона, хлопчатобумажной ткани, полиэстера.."
+                }
+            ]
+        };
+
+
+        let currentUser = null;
+
+        let cart = [];
+
+        let currentProduct = null;
+        
+
+        const authModal = document.getElementById('auth-modal');
+        const productModal = document.getElementById('product-modal');
+        const cartModal = document.getElementById('cart-modal');
+        const loginBtn = document.getElementById('login-btn');
+        const registerBtn = document.getElementById('register-btn');
+        const cartIcon = document.getElementById('cart-icon');
+        const cartCount = document.getElementById('cart-count');
+        const closeAuthModal = document.getElementById('close-auth-modal');
+        const closeProductModal = document.getElementById('close-product-modal');
+        const closeCartModal = document.getElementById('close-cart-modal');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const authTabs = document.querySelectorAll('.auth-tab');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartTotalPrice = document.getElementById('cart-total-price');
+        const checkoutBtn = document.querySelector('.checkout-btn');
+        
+
+        function loadProducts(category) {
+            const section = document.getElementById(category);
+            if (!section) return;
+            
+            const grid = section.querySelector('.products-grid');
+            grid.innerHTML = '';
+            
+            productsData[category].forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.title}" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-title">${product.title}</h3>
+                        <div class="product-price">${product.price} ₽</div>
+                        <div class="product-buttons">
+                            <button class="view-btn" data-id="${product.id}">Посмотреть</button>
+                            <button class="add-to-cart" data-id="${product.id}">В корзину</button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(productCard);
+            });
+            
+
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const productId = parseInt(e.target.getAttribute('data-id'));
+                    showProductModal(productId);
+                });
+            });
+            
+            document.querySelectorAll('.add-to-cart').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const productId = parseInt(e.target.getAttribute('data-id'));
+                    addToCart(productId);
+                });
+            });
+        }
+        
+
+        function showProductModal(productId) {
+            let product = null;
+            
+
+            for (const category in productsData) {
+                product = productsData[category].find(p => p.id === productId);
+                if (product) break;
+            }
+            
+            if (!product) return;
+            
+            currentProduct = product;
+            
+
+            document.getElementById('modal-product-image').src = product.image;
+            document.getElementById('modal-product-title').textContent = product.title;
+            document.getElementById('modal-product-price').textContent = `${product.price} ₽`;
+            document.getElementById('modal-product-description').textContent = product.description;
+            
+
+            productModal.style.display = 'flex';
+        }
+        
+
+        function addToCart(productId, quantity = 1) {
+            let product = null;
+            
+
+            for (const category in productsData) {
+                product = productsData[category].find(p => p.id === productId);
+                if (product) break;
+            }
+            
+            if (!product) return;
+            
+
+            const existingItem = cart.find(item => item.id === product.id);
+            
+            if (existingItem) {
+
+                existingItem.quantity += quantity;
+            } else {
+
+                cart.push({
+                    ...product,
+                    quantity: quantity
+                });
+            }
+            
+            updateCart();
+            alert(`Товар "${product.title}" добавлен в корзину!`);
+        }
+        
+
+        function updateCart() {
+
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+
+            renderCartItems();
+        }
+        
+
+        function renderCartItems() {
+            cartItemsContainer.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p>Корзина пуста</p>';
+                cartTotalPrice.textContent = '0 ₽';
+                return;
+            }
+            
+            let totalPrice = 0;
+            
+            cart.forEach(item => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}" class="cart-item-image">
+                    <div class="cart-item-details">
+                        <div class="cart-item-title">${item.title}</div>
+                        <div class="cart-item-price">${item.price} ₽</div>
+                        <div class="cart-item-controls">
+                            <button class="quantity-btn minus" data-id="${item.id}">-</button>
+                            <span class="cart-item-quantity">${item.quantity}</span>
+                            <button class="quantity-btn plus" data-id="${item.id}">+</button>
+                        </div>
+                        <div class="remove-item" data-id="${item.id}">Удалить</div>
+                    </div>
+                `;
+                cartItemsContainer.appendChild(cartItem);
+                
+                totalPrice += item.price * item.quantity;
+            });
+            
+
+            cartTotalPrice.textContent = `${totalPrice} ₽`;
+            
+
+            document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const productId = parseInt(e.target.getAttribute('data-id'));
+                    updateCartItemQuantity(productId, -1);
+                });
+            });
+            
+            document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const productId = parseInt(e.target.getAttribute('data-id'));
+                    updateCartItemQuantity(productId, 1);
+                });
+            });
+            
+
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const productId = parseInt(e.target.getAttribute('data-id'));
+                    removeFromCart(productId);
+                });
+            });
+        }
+        
+
+        function updateCartItemQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (!item) return;
+            
+            item.quantity += change;
+            
+
+            if (item.quantity <= 0) {
+                cart = cart.filter(item => item.id !== productId);
+            }
+            
+            updateCart();
+        }
+        
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+        
+
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.tab');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+
+                    tab.classList.add('active');
+                    
+
+                    const tabId = tab.getAttribute('data-tab');
+                    
+
+                    document.querySelectorAll('.section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+
+                    const activeSection = document.getElementById(tabId);
+                    if (activeSection) {
+                        activeSection.classList.add('active');
+                        loadProducts(tabId);
+                    }
+                });
+            });
+        }
+        
+
+        function setupAuthTabs() {
+            authTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    
+
+                    authTabs.forEach(t => t.classList.remove('active'));
+                    
+
+                    tab.classList.add('active');
+                    
+
+                    document.querySelectorAll('.auth-form').forEach(form => {
+                        form.classList.remove('active');
+                    });
+                    
+
+                    document.getElementById(`${tabId}-form`).classList.add('active');
+                });
+            });
+        }
+        
+
+        function loadCartFromStorage() {
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCart();
+            }
+        }
+        
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupTabs();
+            setupAuthTabs();
+            loadCartFromStorage();
+            loadProducts('tops'); 
+            
+
+            loginBtn.addEventListener('click', () => {
+                authModal.style.display = 'flex';
+                document.getElementById('login-form').classList.add('active');
+                document.getElementById('register-form').classList.remove('active');
+                authTabs[0].classList.add('active');
+                authTabs[1].classList.remove('active');
+            });
+            
+            registerBtn.addEventListener('click', () => {
+                authModal.style.display = 'flex';
+                document.getElementById('register-form').classList.add('active');
+                document.getElementById('login-form').classList.remove('active');
+                authTabs[1].classList.add('active');
+                authTabs[0].classList.remove('active');
+            });
+            
+
+            cartIcon.addEventListener('click', () => {
+                cartModal.style.display = 'flex';
+            });
+            
+            closeCartModal.addEventListener('click', () => {
+                cartModal.style.display = 'none';
+            });
+            
+
+            closeAuthModal.addEventListener('click', () => {
+                authModal.style.display = 'none';
+            });
+            
+            closeProductModal.addEventListener('click', () => {
+                productModal.style.display = 'none';
+            });
+            
+
+            window.addEventListener('click', (e) => {
+                if (e.target === authModal) {
+                    authModal.style.display = 'none';
+                }
+                if (e.target === productModal) {
+                    productModal.style.display = 'none';
+                }
+                if (e.target === cartModal) {
+                    cartModal.style.display = 'none';
+                }
+            });
+            
+
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = document.getElementById('login-username').value;
+                const password = document.getElementById('login-password').value;
+                
+
+                if (username && password) {
+                    currentUser = { username };
+                    alert(`Добро пожаловать, ${username}!`);
+                    authModal.style.display = 'none';
+                    loginForm.reset();
+                } else {
+                    alert('Пожалуйста, заполните все поля');
+                }
+            });
+            
+            registerForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = document.getElementById('register-username').value;
+                const password = document.getElementById('register-password').value;
+                const confirm = document.getElementById('register-confirm').value;
+                
+                if (password !== confirm) {
+                    alert('Пароли не совпадают');
+                    return;
+                }
+                
+                if (username && password) {
+                    currentUser = { username };
+                    alert(`Регистрация прошла успешно, ${username}! Теперь вы можете войти.`);
+                    authModal.style.display = 'none';
+                    registerForm.reset();
+                    
+
+                    document.getElementById('login-form').classList.add('active');
+                    document.getElementById('register-form').classList.remove('active');
+                    authTabs[0].classList.add('active');
+                    authTabs[1].classList.remove('active');
+                } else {
+                    alert('Пожалуйста, заполните все поля');
+                }
+            });
+            
+            document.getElementById('add-to-cart-modal').addEventListener('click', () => {
+                if (currentProduct) {
+                    addToCart(currentProduct.id);
+                    productModal.style.display = 'none';
+                }
+            });
+            
+            checkoutBtn.addEventListener('click', () => {
+                if (cart.length === 0) {
+                    alert('Корзина пуста!');
+                    return;
+                }
+                
+                if (!currentUser) {
+                    alert('Пожалуйста, войдите или зарегистрируйтесь для оформления заказа');
+                    authModal.style.display = 'flex';
+                    return;
+                }
+                
+                const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                alert(`Заказ оформлен, ${currentUser.username}!\nИтого к оплате: ${totalPrice} ₽`);
+                cart = [];
+                updateCart();
+                cartModal.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
